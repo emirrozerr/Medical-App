@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tele_tip/ui/app_colors.dart';
-import 'package:snippet_coder_utils/FormHelper.dart';
+
+import 'package:tele_tip/ui/registerPage/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool hidePassword = false;
+  bool hidePassword = true;
   bool isAPIcallProcess = false;
 
   @override
@@ -25,71 +26,92 @@ class _LoginPageState extends State<LoginPage> {
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         logoWidget(context),
-        const Center(
+        Center(
           child: Padding(
-            padding: EdgeInsets.only(bottom: 30, top: 50),
+            padding: const EdgeInsets.only(bottom: 30, top: 50),
             child: Text(
               "Hoş Geldiniz",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
-                  color: Colors.white),
+                  color: newLogoBrown),
             ),
           ),
         ),
-        FormHelper.inputFieldWidget(context, "email", "E-mail",
-            (onValidateVal) {
-          if (onValidateVal.isEmpty) {
-            return "Email adresi boş olamaz";
-          }
-          return null;
-        }, (onSavedVal) {},
-            borderFocusColor: Colors.white,
-            prefixIconColor: Colors.white,
-            suffixIcon: Icon(
-              Icons.person,
-              color: Colors.white.withOpacity(0.7),
-            ),
-            borderColor: Colors.white,
-            textColor: Colors.white,
-            hintColor: Colors.white.withOpacity(0.7),
-            borderRadius: 10),
         Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: FormHelper.inputFieldWidget(context, "password", "Şifre",
-              (onValidateVal) {
-            if (onValidateVal.isEmpty) {
-              return "Şifre boş olamaz";
-            }
-            return null;
-          }, (onSavedVal) {},
-              borderFocusColor: Colors.white,
-              prefixIconColor: Colors.white,
-              borderColor: Colors.white,
-              textColor: Colors.white,
-              obscureText: hidePassword,
-              suffixIcon: IconButton(
-                onPressed: () {
-                  setState(() {
-                    hidePassword = !hidePassword;
-                  });
-                },
-                icon: Icon(
-                    hidePassword ? Icons.visibility : Icons.visibility_off),
-                color: Colors.white.withOpacity(0.7),
-              ),
-              hintColor: Colors.white.withOpacity(0.7),
-              borderRadius: 10),
+          padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
+          child: TextFormField(
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+                hintText: "E-Mail",
+                hintStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                suffixIcon: Icon(
+                  Icons.person,
+                  color: Colors.white.withOpacity(0.7),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(color: Colors.white)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(color: Colors.white))),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Email alanı boş olamaz.";
+              }
+              return null;
+            },
+            onSaved: null,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
+          child: TextFormField(
+            style: const TextStyle(color: Colors.white),
+            obscureText: hidePassword,
+            decoration: InputDecoration(
+                hintText: "Şifre",
+                hintStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(color: Colors.white)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(color: Colors.white)),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    hidePassword ? Icons.visibility_off : Icons.visibility,
+                    color: Colors.white.withOpacity(0.7),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      hidePassword = !hidePassword;
+                    });
+                  },
+                )),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Şifre alanı boş olamaz.";
+              }
+              return null;
+            },
+            onSaved: null,
+          ),
         ),
         const SizedBox(
-          height: 40,
+          height: 20,
         ),
         Center(
-          child: FormHelper.submitButton("Giriş yap", () {},
-              btnColor: newLogoRed,
-              borderColor: newLogoPink,
-              txtColor: newLogoPink,
-              borderRadius: 10),
+          child: RawMaterialButton(
+              onPressed: (() {}),
+              fillColor: newLogoRed,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: Text(
+                "Giriş Yap",
+                style:
+                    TextStyle(color: buttonText, fontWeight: FontWeight.bold),
+              )),
         ),
         const SizedBox(
           height: 35,
@@ -104,7 +126,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/register");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RolePage()));
                   },
                   child: const Text(
                     "Kayıt Ol",

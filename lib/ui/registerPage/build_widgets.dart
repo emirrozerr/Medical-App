@@ -21,7 +21,7 @@ Widget buildAd() => Container(
           }
           return null;
         },
-        onChanged: null,
+        onSaved: null,
       ),
     );
 
@@ -45,7 +45,7 @@ Widget buildSoyad() => Container(
           }
           return null;
         },
-        onChanged: null,
+        onSaved: null,
       ),
     );
 
@@ -69,7 +69,7 @@ Widget buildMail() => Container(
           }
           return null;
         },
-        onChanged: null,
+        onSaved: null,
       ),
     );
 
@@ -93,7 +93,7 @@ Widget buildSifre() => Container(
           }
           return null;
         },
-        onChanged: null,
+        onSaved: null,
       ),
     );
 
@@ -117,7 +117,7 @@ Widget buildAnaBilim() => Container(
           }
           return null;
         },
-        onChanged: null,
+        onSaved: null,
       ),
     );
 
@@ -141,7 +141,7 @@ Widget buildUzmanlik() => Container(
           }
           return null;
         },
-        onChanged: null,
+        onSaved: null,
       ),
     );
 
@@ -165,7 +165,7 @@ Widget buildFakulte() => Container(
           }
           return null;
         },
-        onChanged: null,
+        onSaved: null,
       ),
     );
 
@@ -175,9 +175,7 @@ Widget buildSubmit(BuildContext context) => Padding(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "/login");
-              },
+              onPressed: () {},
               child: Text(
                 "Girişe Dön",
                 style:

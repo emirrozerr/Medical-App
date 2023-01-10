@@ -74,7 +74,10 @@ class RoleWidget extends StatelessWidget {
       Expanded(
           child: TabBarView(
         controller: tabController,
-        children: [_patientRegister(context), _doctorRegister(context)],
+        children: [
+          _patientRegister(context),
+          _doctorRegister(context),
+        ],
       ))
     ]);
   }
@@ -86,6 +89,17 @@ Widget _patientRegister(BuildContext context) {
     buildSoyad(),
     buildMail(),
     buildSifre(),
+    RawMaterialButton(
+        onPressed: (() {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const LoginPage()));
+        }),
+        fillColor: newLogoRed,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Text(
+          "Girişe Dön",
+          style: TextStyle(color: buttonText, fontWeight: FontWeight.bold),
+        ))
   ]);
 }
 
@@ -98,5 +112,16 @@ Widget _doctorRegister(BuildContext context) {
     buildAnaBilim(),
     buildUzmanlik(),
     buildFakulte(),
+    RawMaterialButton(
+        onPressed: (() {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const LoginPage()));
+        }),
+        fillColor: newLogoRed,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Text(
+          "Girişe Dön",
+          style: TextStyle(color: buttonText, fontWeight: FontWeight.bold),
+        ))
   ]);
 }
