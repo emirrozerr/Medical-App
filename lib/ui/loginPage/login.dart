@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tele_tip/ui/app_colors.dart';
 
-import 'package:tele_tip/ui/registerPage/register_page.dart';
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -22,8 +20,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _loginUI(BuildContext context) {
     return ListView(
-      // mainAxisAlignment: MainAxisAlignment.start,
-      // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         logoWidget(context),
         Center(
@@ -120,21 +116,18 @@ class _LoginPageState extends State<LoginPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
+              Text(
                 "Hesabın yok mu?   ",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: newLogoBrown),
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RolePage()));
+                    Navigator.pushNamed(context, '/register');
                   },
-                  child: const Text(
+                  child: Text(
                     "Kayıt Ol",
                     style: TextStyle(
-                        color: Colors.white,
+                        color: newLogoBrown,
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ))
