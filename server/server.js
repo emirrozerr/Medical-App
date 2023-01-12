@@ -12,10 +12,11 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
 
-//drop existing tables and re-sync database
+// drop existing tables and re-sync database
+
 // db.sequelize.sync({ force: true }).then(() => {
 //     console.log("Drop and re-sync db.");
-//});
+// });
 
 
 var corsOptions = {
@@ -30,11 +31,8 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
-
+require("./app/routes/doctor.router")(app);
+require("./app/routes/major_science.router")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
