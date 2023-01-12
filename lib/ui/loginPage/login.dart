@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(backgroundColor: newLogoBeige, body: _loginUI(context)));
+        home: Scaffold(backgroundColor: newBeige, body: _loginUI(context)));
   }
 
   Widget _loginUI(BuildContext context) {
@@ -28,9 +28,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Text(
               "Hoş Geldiniz",
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  color: newLogoBrown),
+                  fontWeight: FontWeight.bold, fontSize: 25, color: newDarkRed),
             ),
           ),
         ),
@@ -97,17 +95,34 @@ class _LoginPageState extends State<LoginPage> {
         const SizedBox(
           height: 20,
         ),
-        Center(
-          child: RawMaterialButton(
-              onPressed: (() {}),
-              fillColor: newLogoRed,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Text(
-                "Giriş Yap",
-                style:
-                    TextStyle(color: buttonText, fontWeight: FontWeight.bold),
-              )),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            RawMaterialButton(
+                onPressed: (() {
+                  Navigator.pushNamed(context, '/patientHome');
+                }),
+                fillColor: logoRed,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: Text(
+                  "Hasta Girişi",
+                  style:
+                      TextStyle(color: buttonText, fontWeight: FontWeight.bold),
+                )),
+            RawMaterialButton(
+                onPressed: (() {
+                  Navigator.pushNamed(context, '/doctorHome');
+                }),
+                fillColor: logoRed,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: Text(
+                  "Doktor Girişi",
+                  style:
+                      TextStyle(color: buttonText, fontWeight: FontWeight.bold),
+                )),
+          ],
         ),
         const SizedBox(
           height: 35,
@@ -118,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Text(
                 "Hesabın yok mu?   ",
-                style: TextStyle(color: newLogoBrown),
+                style: TextStyle(color: newDarkRed),
               ),
               TextButton(
                   onPressed: () {
@@ -127,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text(
                     "Kayıt Ol",
                     style: TextStyle(
-                        color: newLogoBrown,
+                        color: newDarkRed,
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ))

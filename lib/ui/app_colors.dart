@@ -15,8 +15,9 @@ var thirdLogoGreen = HexColor("#64EBB6");
 
 // !!! ŞU AN ALTTA KALAN RENK PALETİNİ KULLANIYORUM !!!
 
-var newLogoRed = HexColor("#FF2E2E");
-var newLogoBrown = HexColor("#56423E");
-var newLogoBeige = HexColor("#BEA6A1");
-var newLogoPink = HexColor("#FFE5DB");
-var buttonText = HexColor("#666869");
+var logoRed = HexColor("#BF0637");
+var newDarkRed = HexColor("#730606");
+var newOrange = HexColor("#D9560B");
+var newBeige = HexColor("#D9C5B4");
+var newYellow = HexColor("#F28B0C");
+var buttonText = Colors.white;

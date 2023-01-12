@@ -15,7 +15,7 @@ class _RolePageState extends State<RolePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     TabController tabController = TabController(vsync: this, length: 2);
     return Scaffold(
-        backgroundColor: newLogoBeige,
+        backgroundColor: newBeige,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -75,7 +75,7 @@ Widget _patientRegister(BuildContext context) {
             onPressed: (() {
               Navigator.pushNamed(context, '/login');
             }),
-            fillColor: newLogoRed,
+            fillColor: logoRed,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Text(
@@ -84,7 +84,7 @@ Widget _patientRegister(BuildContext context) {
             )),
         RawMaterialButton(
             onPressed: (() {}),
-            fillColor: newLogoRed,
+            fillColor: logoRed,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Text(
@@ -149,7 +149,7 @@ Widget _doctorRegister(BuildContext context) {
             onPressed: (() {
               Navigator.pushNamed(context, '/login');
             }),
-            fillColor: newLogoRed,
+            fillColor: logoRed,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Text(
@@ -158,7 +158,7 @@ Widget _doctorRegister(BuildContext context) {
             )),
         RawMaterialButton(
             onPressed: (() {}),
-            fillColor: newLogoRed,
+            fillColor: logoRed,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Text(
@@ -185,11 +185,11 @@ class tabCard extends StatelessWidget {
       elevation: 5,
       child: Container(
         decoration: BoxDecoration(
-            color: newLogoRed, borderRadius: BorderRadius.circular(12)),
+            color: logoRed, borderRadius: BorderRadius.circular(12)),
         child: TabBar(
             indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: newLogoPink.withOpacity(0.5)),
+                color: newDarkRed.withOpacity(0.5)),
             controller: tabController,
             isScrollable: true,
             labelPadding: const EdgeInsets.symmetric(horizontal: 30),
@@ -198,7 +198,7 @@ class tabCard extends StatelessWidget {
                   child: Text(
                 "Hasta",
                 style:
-                    TextStyle(color: newLogoBrown, fontWeight: FontWeight.bold),
+                    TextStyle(color: newDarkRed, fontWeight: FontWeight.bold),
               )),
               Tab(
                   child: Text(
