@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:tele_tip/ui/app_colors.dart';
 import 'package:tele_tip/ui/homePage/doctor_search.dart';
-import 'package:tele_tip/ui/messagePage/chat_details.dart';
 import 'package:tele_tip/ui/messagePage/chat_list.dart';
+import 'package:tele_tip/ui/profilePage/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     DoctorSearch(),
     ChatListPage(),
-    ChatDetailPage(),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {

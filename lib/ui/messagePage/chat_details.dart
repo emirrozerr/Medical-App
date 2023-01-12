@@ -43,7 +43,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         children: <Widget>[
                           IconButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/');
+                              Navigator.pushNamed(context, '/home');
                             },
                             icon: Icon(
                               Icons.arrow_back,

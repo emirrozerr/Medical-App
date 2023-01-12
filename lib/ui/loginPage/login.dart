@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tele_tip/ui/app_colors.dart';
+import 'package:tele_tip/ui/widgets/logo.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -100,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             RawMaterialButton(
                 onPressed: (() {
-                  Navigator.pushNamed(context, '/patientHome');
+                  Navigator.pushNamed(context, '/home');
                 }),
                 fillColor: logoRed,
                 shape: RoundedRectangleBorder(
@@ -112,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                 )),
             RawMaterialButton(
                 onPressed: (() {
-                  Navigator.pushNamed(context, '/doctorHome');
+                  Navigator.pushNamed(context, '/home');
                 }),
                 fillColor: logoRed,
                 shape: RoundedRectangleBorder(
@@ -152,32 +153,4 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
-}
-
-Widget logoWidget(BuildContext context) {
-  return Container(
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.height / 3,
-    decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.white, Colors.white]),
-        borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(100),
-            bottomRight: Radius.circular(100))),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Align(
-          alignment: Alignment.center,
-          child: Image.asset(
-            "assets/images/logo.png",
-            width: 150,
-            fit: BoxFit.contain,
-          ),
-        )
-      ],
-    ),
-  );
 }

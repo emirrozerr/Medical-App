@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:tele_tip/ui/app_colors.dart';
-import 'package:tele_tip/ui/loginPage/login.dart';
 import 'package:tele_tip/ui/widgets/custom_text_input.dart';
+import 'package:tele_tip/ui/widgets/logo.dart';
 
-class RolePage extends StatefulWidget {
-  const RolePage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _RolePageState createState() => _RolePageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RolePageState extends State<RolePage> with TickerProviderStateMixin {
+class _RegisterPageState extends State<RegisterPage>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     TabController tabController = TabController(vsync: this, length: 2);
