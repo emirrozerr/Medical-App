@@ -33,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 
 require("./app/routes/doctor.router")(app);
 require("./app/routes/major_science.router")(app);
+require("./app/routes/patient.router")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
