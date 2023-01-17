@@ -5,7 +5,7 @@ const { isTokenIncluded } = require("../../helpers/tokens/tokenHelpers");
 
 const registerDoctor = (req, res, next) => {
   db.query(
-    `SELECT * FROM doctors WHERE LOWER(email) = LOWER(${db.escape(
+    `SELECT * FROM users WHERE LOWER(email) = LOWER(${db.escape(
       req.body.email
     )});`,
 
@@ -24,11 +24,11 @@ const registerDoctor = (req, res, next) => {
             });
           } else {
             db.query(
-              `INSERT INTO doctors (name, surname, phone, email, password, image, is_doctor,school,hospital,major,professions) VALUES ('${
+              `INSERT INTO users (name, surname, phone, email, password, image, is_doctor,school,hospital,major,profession) VALUES ('${
                 req.body.name
               }','${req.body.surname}','${req.body.phone}',${db.escape(
                 req.body.email
-              )}, ${db.escape(hash)},'default.png'), ${db.escape( 1 )}, ${db.escape( req.body.school )}, ${db.escape( req.body.hospital )}, ${db.escape( req.body.major )}, ${db.escape( req.body.professions )}`,
+              )}, ${db.escape(hash)},'default.png', ${db.escape( 1 )}, ${db.escape( req.body.school )}, ${db.escape( req.body.hospital )}, ${db.escape( req.body.major )}, ${db.escape( req.body.professions )})`,
               (err, result) => {
                 if (err) {
                   throw err;
