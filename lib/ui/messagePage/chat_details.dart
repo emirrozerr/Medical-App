@@ -1,21 +1,28 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:tele_tip/ui/app_colors.dart';
-import 'package:tele_tip/ui/models/message_models.dart';
+import 'package:tele_tip/app_colors.dart';
+import 'package:tele_tip/services/api_service.dart';
 
-final data = jsonDecode(
-    '{"id": 1,"name": "Kişi 1","image": "https://genshin.honeyhunterworld.com/img/kazuha_047.webp","messages": [ {"mID": 12, "mDetail": "sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdf", "senderID": 1},{"mID": 13, "mDetail": "mrb", "senderID": 2}]}');
+class MessageDetails extends StatefulWidget {
+  const MessageDetails(
+      {Key? key,
+      required this.id,
+      required this.duo,
+      required this.userName,
+      required this.image,
+      required this.target})
+      : super(key: key);
 
-final models = MessageModel.fromJson(data);
-
-class ChatDetailPage extends StatefulWidget {
-  const ChatDetailPage({super.key});
+  final int id;
+  final String duo;
+  final String userName;
+  final String image;
+  final int target;
 
   @override
-  State<ChatDetailPage> createState() => _ChatDetailPageState();
+  _MessageDetailsState createState() => _MessageDetailsState();
 }
 
-class _ChatDetailPageState extends State<ChatDetailPage> {
+class _MessageDetailsState extends State<MessageDetails> {
   final _controller = TextEditingController();
   String? message;
   @override
@@ -23,7 +30,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
-      backgroundColor: newBeige,
+      backgroundColor: backgroundBeige,
       body: SafeArea(
         child: SizedBox(
           child: Column(
@@ -34,8 +41,10 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                 height: MediaQuery.of(context).size.height / 7,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 8),
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 8,
+                    ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Row(
@@ -43,7 +52,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         children: <Widget>[
                           IconButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/home');
+                              Navigator.pop(context);
                             },
                             icon: Icon(
                               Icons.arrow_back,
@@ -58,7 +67,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20.0),
                                   image: DecorationImage(
-                                    image: NetworkImage(models.image!),
+                                    image: NetworkImage(widget.image),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -67,10 +76,10 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                                 height: 2,
                               ),
                               Text(
-                                models.name!,
+                                widget.userName,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16.0,
+                                  fontSize: 20.0,
                                   color: newDarkRed,
                                   letterSpacing: 0.8,
                                   height: 1.25,
@@ -79,7 +88,9 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                               ),
                             ],
                           ),
-                          const SizedBox(width: 30),
+                          const SizedBox(
+                            width: 30,
+                          )
                         ],
                       ),
                     ),
@@ -89,45 +100,58 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   ],
                 ),
               ),
-              allMessages(screenHeight - 220, keyboardHeight),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: Row(
-                  children: <Widget>[
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: TextField(
-                        controller: _controller,
-                        onChanged: (onSavedVal) {
-                          message = onSavedVal;
-                        },
-                        style: TextStyle(
-                          fontSize: 14.0,
+              allMessage(screenHeight - 220, keyboardHeight),
+              Row(
+                children: <Widget>[
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      onChanged: (onSavedVal) {
+                        message = onSavedVal;
+                      },
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: newDarkRed,
+                        letterSpacing: 0.7000000000000001,
+                        fontWeight: FontWeight.w600,
+                        height: 1.43,
+                      ),
+                      cursorColor: newOrange,
+                      decoration: InputDecoration(
+                        hintText: 'Mesaj gönder',
+                        hintStyle: TextStyle(
                           color: newDarkRed,
-                          letterSpacing: 0.7000000000000001,
-                          fontWeight: FontWeight.w600,
-                          height: 1.43,
-                        ),
-                        cursorColor: newDarkRed,
-                        decoration: InputDecoration(
-                          hintText: 'Mesaj gönder',
-                          hintStyle: TextStyle(
-                            color: buttonText,
-                          ),
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            foregroundColor: newBeige,
-                            backgroundColor: newDarkRed),
-                        onPressed: () async {},
-                        child: Row(
-                          children: const [Icon(Icons.send)],
-                        ))
-                  ],
-                ),
-              )
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: backgroundBeige,
+                      backgroundColor: newDarkRed,
+                    ),
+                    onPressed: () async {
+                      var isSend = await APIService.sendMessage(
+                          target: widget.target,
+                          source: widget.id,
+                          message: message);
+                      if (isSend) {
+                        setState(() {
+                          _controller.clear();
+                        });
+                        message = "";
+                      } else {}
+                    },
+                    child: Row(
+                      children: const [Icon(Icons.send)],
+                    ),
+                  )
+                ],
+              ),
+              //const Line(),
             ],
           ),
         ),
@@ -135,18 +159,26 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
     );
   }
 
-  Widget allMessages(screen, keyboard) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.95,
-      height: screen - (keyboard + 56),
-      child: ListView.builder(
-          itemCount: models.messages!.length,
-          itemBuilder: ((context, index) => Padding(
-              padding: const EdgeInsets.only(left: 5, top: 5, bottom: 5),
-              child: models.id == models.messages![index]!.senderID!
-                  ? source(models.messages![index]!.mDetail!)
-                  : target(models.messages![index]!.mDetail!)))),
-    );
+  Widget allMessage(screen, keyboard) {
+    return FutureBuilder(
+        future: APIService.getDuoMessage(widget.duo),
+        builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) =>
+            snapshot.hasData
+                ? SizedBox(
+                    height: screen - keyboard,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (BuildContext context, index) => Padding(
+                          padding:
+                              const EdgeInsets.only(left: 5, top: 5, bottom: 5),
+                          child: widget.id == snapshot.data![index]['source']
+                              ? source(snapshot.data![index]['message'])
+                              : target(snapshot.data![index]['message'])),
+                    ),
+                  )
+                : const Text("data"));
   }
 
   Widget source(String text) {

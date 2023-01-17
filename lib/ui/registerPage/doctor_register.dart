@@ -4,23 +4,26 @@ import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 import 'package:tele_tip/app_colors.dart';
 import 'package:tele_tip/config.dart';
-import 'package:tele_tip/models/user_login_req.dart';
+import 'package:tele_tip/models/user_register_req.dart';
 import 'package:tele_tip/components/or_divider.dart';
 import 'package:tele_tip/services/api_service.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class DoctorRegisterPage extends StatefulWidget {
+  const DoctorRegisterPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  DoctorRegisterPageState createState() => DoctorRegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class DoctorRegisterPageState extends State<DoctorRegisterPage> {
   bool isAPIcallProcess = false;
   bool hidePassword = true;
   GlobalKey<FormState> globalFromKey = GlobalKey<FormState>();
   String? email;
   String? password;
+  String? name;
+  String? surname;
+  String phone = "530 000 00 00";
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +31,19 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         backgroundColor: backgroundBeige,
         body: ProgressHUD(
+          child: Form(
+            key: globalFromKey,
+            child: _registerUI(context),
+          ),
           key: UniqueKey(),
           inAsyncCall: isAPIcallProcess,
           opacity: 0.3,
-          child: Form(
-            key: globalFromKey,
-            child: _loginUI(context),
-          ),
         ),
       ),
     );
   }
 
-  Widget _loginUI(BuildContext context) {
+  Widget _registerUI(BuildContext context) {
     return SingleChildScrollView(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -48,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 3,
+          height: MediaQuery.of(context).size.height / 5,
           decoration: const BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -71,41 +74,74 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-        Center(
+        const Center(
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 30, top: 50),
+            padding: EdgeInsets.only(bottom: 30, top: 50),
             child: Text(
-              "Hoş Geldiniz",
+              "Kayıt Ol",
               style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 25, color: newDarkRed),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  color: Colors.white),
             ),
           ),
         ),
-        FormHelper.inputFieldWidget(context, "email", "E-mail",
-            (onValidateVal) {
+        FormHelper.inputFieldWidget(context, "name", "Adınız", (onValidateVal) {
           if (onValidateVal.isEmpty) {
-            return "Email adresi boş olamaz";
+            return "Lütfen adınızı giriniz!";
           }
           return null;
         }, (onSavedVal) {
-          email = onSavedVal;
+          name = onSavedVal;
         },
             borderFocusColor: Colors.white,
             prefixIconColor: Colors.white,
-            suffixIcon: Icon(
-              Icons.person,
-              color: Colors.white.withOpacity(0.7),
-            ),
             borderColor: Colors.white,
             textColor: Colors.white,
             hintColor: Colors.white.withOpacity(0.7),
             borderRadius: 10),
         Padding(
           padding: const EdgeInsets.only(top: 10),
-          child: FormHelper.inputFieldWidget(context, "password", "Şifre",
+          child: FormHelper.inputFieldWidget(context, "surname", "Soyadınız",
               (onValidateVal) {
             if (onValidateVal.isEmpty) {
-              return "Şifre boş olamaz";
+              return "Lütfen Soyadınızı giriniz.";
+            }
+            return null;
+          }, (onSavedVal) {
+            surname = onSavedVal;
+          },
+              borderFocusColor: Colors.white,
+              prefixIconColor: Colors.white,
+              borderColor: Colors.white,
+              textColor: Colors.white,
+              hintColor: Colors.white.withOpacity(0.7),
+              borderRadius: 10),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: FormHelper.inputFieldWidget(context, "email", "E-mail",
+              (onValidateVal) {
+            if (onValidateVal.isEmpty) {
+              return "Email adresi boş olamaz";
+            }
+            return null;
+          }, (onSavedVal) {
+            email = onSavedVal;
+          },
+              borderFocusColor: Colors.white,
+              prefixIconColor: Colors.white,
+              borderColor: Colors.white,
+              textColor: Colors.white,
+              hintColor: Colors.white.withOpacity(0.7),
+              borderRadius: 10),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: FormHelper.inputFieldWidget(context, "password", "Şifre",
+              (onValidateVal) {
+            if (onValidateVal.length < 6) {
+              return "Şifre 6 karakterden küçük olamaz";
             }
             return null;
           }, (onSavedVal) {
@@ -133,41 +169,51 @@ class _LoginPageState extends State<LoginPage> {
           height: 40,
         ),
         Center(
-          child: FormHelper.submitButton("Giriş yap", () {
+          child: FormHelper.submitButton("Kayıt ol", () {
             if (validateAndSave()) {
               setState(() {
                 isAPIcallProcess = true;
               });
-
-              UserLoginReqModel model =
-                  UserLoginReqModel(email: email!, password: password!);
-              APIService.userLogin(model).then((res) {
-                if (res) {
+              UserRegisterReqModel model = UserRegisterReqModel(
+                  email: email!,
+                  password: password!,
+                  name: name!,
+                  surname: surname!,
+                  phone: phone);
+              APIService.userRegister(model).then((res) {
+                if (res.success) {
                   setState(() {
                     isAPIcallProcess = false;
                   });
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/home', (route) => false);
+                  FormHelper.showSimpleAlertDialog(context, Config.appName,
+                      "Kayıt Başarılı. Giriş Yapabilirsiniz", "Tamam", () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/userLogin', (route) => false);
+                  });
                 } else {
+                  setState(() {
+                    isAPIcallProcess = false;
+                  });
                   FormHelper.showSimpleAlertDialog(
-                      context, Config.appName, "Email/Şifre Yanlış", "Tamam",
-                      () {
-                    setState(() {
-                      isAPIcallProcess = false;
-                    });
+                      context, Config.appName, res.msg, "Tamam", () {
                     Navigator.pop(context);
                   });
+                  // FormHelper.showSimpleAlertDialog(
+                  //     context, Config.appName, res.msg, "Tamam", () {
+                  //   Navigator.pushNamedAndRemoveUntil(
+                  //       context, '/userRegister', (route) => false);
+                  // });
                 }
               });
             }
           },
               btnColor: newDarkRed,
-              borderColor: newDarkRed,
+              borderColor: Colors.white,
               txtColor: Colors.white,
-              borderRadius: 30),
+              borderRadius: 10),
         ),
         const SizedBox(
-          height: 35,
+          height: 15,
         ),
         const Center(child: OrDivider()),
         Center(
@@ -176,18 +222,18 @@ class _LoginPageState extends State<LoginPage> {
               style: const TextStyle(color: Colors.grey, fontSize: 14),
               children: <TextSpan>[
                 const TextSpan(
-                  text: "Henüz bir hesabın yok mu?",
+                  text: "Bir hesabın var mı o halde?",
                   style: TextStyle(color: Colors.white),
                 ),
                 TextSpan(
-                    text: " Kayıt ol",
+                    text: " Giriş Yap",
                     style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.pushNamed(context, "/userRegister");
+                        Navigator.pushNamed(context, "/userLogin");
                       })
               ],
             ),

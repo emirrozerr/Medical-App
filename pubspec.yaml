@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   snippet_coder_utils: ^1.0.12
   convex_bottom_bar: ^3.1.0+1
+  api_cache_manager: ^1.0.2
 
 dev_dependencies:
   flutter_test:

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:tele_tip/ui/app_colors.dart';
-import 'package:tele_tip/ui/homePage/doctor_search.dart';
+import 'package:tele_tip/app_colors.dart';
+import 'package:tele_tip/ui/homePage/patient_home.dart';
 import 'package:tele_tip/ui/messagePage/chat_list.dart';
-import 'package:tele_tip/ui/profilePage/profile.dart';
+import 'package:tele_tip/ui/profilePage/profile_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int? index;
+  const HomePage({super.key, this.index});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -14,9 +15,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    setState(() {
+      _selectedIndex = widget.index ?? 0;
+    });
+    super.initState();
+  }
+
   static const List<Widget> _widgetOptions = <Widget>[
-    DoctorSearch(),
-    ChatListPage(),
+    PatientHomePage(),
+    MessagePage(),
     ProfilePage(),
   ];
 
