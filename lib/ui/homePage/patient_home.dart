@@ -36,10 +36,11 @@ class _PatientHomePageState extends State<PatientHomePage> {
 
   var listeProf = <String>[
     'Seç',
-    'Bel Fıtığı',
-    'Boyun Fıtığı',
-    'Omurilik Felci',
-    'Optik',
+    'Beyin Tümörü',
+    'Robotik Cerrahi',
+    'Mezoterapi',
+    'Lazer Tedavisi',
+    'Mide Kanseri'
   ];
 
   @override

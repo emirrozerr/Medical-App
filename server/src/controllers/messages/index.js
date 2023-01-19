@@ -46,6 +46,7 @@ const getUserAllMessage = async (req, res, next) => {
     });
 
     let str = makeQueryString(a);
+   
 
     db.query(str, (err, result2) => {
       if (err) {
@@ -56,8 +57,7 @@ const getUserAllMessage = async (req, res, next) => {
           body: [],
         });
       }
-      console.log(result2);
-      console.log(result);
+    
       result.map((item, index) => {
         item.source = id;
         item.target = a[index];
