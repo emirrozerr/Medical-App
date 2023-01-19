@@ -47,7 +47,7 @@ class Body {
   late final String name;
   late final String surname;
   late final String image;
-  late final String lastLogin;
+  late final String? lastLogin;
   late final String? science;
 
   Body.fromJson(Map<String, dynamic> json) {

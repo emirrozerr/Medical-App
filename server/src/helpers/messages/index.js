@@ -7,7 +7,7 @@ const getUserbyIDMessage = (str, id) => {
 };
 
 const makeQueryString = (a) => {
-  let str = "select u.id,u.image,u.name,u.email,u.surname,u.phone,u.last_login,major_science.science from users as u JOIN major_science on u.major = major_science.id where ";
+  let str = "select u.id,u.image,u.name,u.email,u.surname,u.last_login,major_science.science from users as u JOIN major_science on u.major = major_science.id where ";
 
   for (let ct = 0; ct < a.length; ct++) {
     if (a.length == 1 && ct == 0) {

@@ -173,7 +173,6 @@ class _PatientTabState extends State<PatientTab> {
   String? surname;
   String? hospital;
   String? school;
-  String phone = "530 000 00 00";
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -268,7 +267,6 @@ class _PatientTabState extends State<PatientTab> {
               password: password!,
               name: name!,
               surname: surname!,
-              phone: phone,
             );
             APIService.userRegister(model).then((res) {
               if (res.success) {
@@ -341,17 +339,8 @@ class _DoctorTabState extends State<DoctorTab> {
   String? surname;
   String? hospital;
   String? school;
-  String phone = "530 000 00 00";
-
-  var listeProf = <String>[
-    'Seç',
-    'Bel Fıtığı',
-    'Boyun Fıtığı',
-    'Omurilik Felci',
-    'Optik',
-  ];
-  String dropdownValue = 'Seç';
-  String dropdownValue2 = 'Seç';
+  String? profession;
+  String dropdownValue = 'Ana Bilim Dalınız';
 
   @override
   Widget build(BuildContext context) {
@@ -476,6 +465,25 @@ class _DoctorTabState extends State<DoctorTab> {
                 borderRadius: 10),
           ),
           Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: FormHelper.inputFieldWidget(
+                context, "profession", "Uzmanlık Alan(lar)ınız",
+                (onValidateVal) {
+              if (onValidateVal.isEmpty) {
+                return "Lütfen uzmanlığınızı giriniz.";
+              }
+              return null;
+            }, (onSavedVal) {
+              profession = onSavedVal;
+            },
+                borderFocusColor: Colors.white,
+                prefixIconColor: Colors.white,
+                borderColor: Colors.white,
+                textColor: Colors.grey.withOpacity(0.8),
+                hintColor: Colors.grey.withOpacity(0.8),
+                borderRadius: 10),
+          ),
+          Padding(
             padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
             child: DropdownButton<String>(
               isExpanded: true,
@@ -494,7 +502,7 @@ class _DoctorTabState extends State<DoctorTab> {
                 });
               },
               items: <String>[
-                'Seç',
+                'Ana Bilim Dalınız',
                 'Anatomi',
                 'Fizyoloji',
                 'Genel Cerrahi',
@@ -508,37 +516,36 @@ class _DoctorTabState extends State<DoctorTab> {
               }).toList(),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-            child: DropdownButton<String>(
-              isExpanded: true,
-              dropdownColor: backgroundBeige,
-              value: dropdownValue2,
-              elevation: 16,
-              style:
-                  TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 18),
-              underline: Container(
-                height: 2,
-                color: Colors.white,
-              ),
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropdownValue2 = newValue!;
-                });
-              },
-              items: listeProf.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+          //   child: DropdownButton<String>(
+          //     isExpanded: true,
+          //     dropdownColor: backgroundBeige,
+          //     value: dropdownValue2,
+          //     elevation: 16,
+          //     style:
+          //         TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 18),
+          //     underline: Container(
+          //       height: 2,
+          //       color: Colors.white,
+          //     ),
+          //     onChanged: (String? newValue) {
+          //       setState(() {
+          //         dropdownValue2 = newValue!;
+          //       });
+          //     },
+          //     items: listeProf.map<DropdownMenuItem<String>>((String value) {
+          //       return DropdownMenuItem<String>(
+          //         value: value,
+          //         child: Text(value),
+          //       );
+          //     }).toList(),
+          //   ),
+          // ),
           const SizedBox(
             height: 40,
           ),
           FormHelper.submitButton("Kayıt Ol", () {
-            print("ben malım");
             if (widget.validate()) {
               widget.onSaved(false);
               DoctorRegisterRequest model = DoctorRegisterRequest(
@@ -546,11 +553,11 @@ class _DoctorTabState extends State<DoctorTab> {
                 password: password!,
                 name: name!,
                 surname: surname!,
-                phone: phone,
                 hospital: hospital!,
                 school: school!,
                 major: dropdownValue,
-                profession: dropdownValue2,
+                profession: profession!,
+                isDoctor: 1,
               );
               APIService.doctorRegister(model).then((res) {
                 if (res.success) {

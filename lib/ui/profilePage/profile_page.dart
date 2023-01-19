@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   List<String> list = [
-    'bla',
+    'Ana Bilim Dalı',
     'Anatomi',
     'Fizyoloji',
     'Genel Cerrahi',
@@ -114,9 +114,9 @@ class _ProfilePageState extends State<ProfilePage> {
               future: SharedService.loginDetails(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  if (snapshot.data!.user.isDoctor == 1) {
+                    return Center(
+                        child: Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -141,14 +141,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Telefon: ",
+                              "Ana Bilim Dalı: ",
                               style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                   color: newDarkRed),
                             ),
                             Text(
-                              snapshot.data!.user.phone,
+                              list[snapshot.data!.user.major!],
                               style: const TextStyle(
                                 fontSize: 18,
                                 color: Colors.black,
@@ -156,26 +156,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        if (snapshot.data!.user.isDoctor == 1)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Ana Bilim Dalı: ",
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: newDarkRed),
-                              ),
-                              Text(
-                                list[snapshot.data!.user.major!],
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -234,8 +214,30 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ],
-                    ),
-                  );
+                    ));
+                  } else {
+                    return Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "E-Mail: ",
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: newDarkRed),
+                          ),
+                          Text(
+                            snapshot.data!.user.email,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }
@@ -247,6 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: ElevatedButton(
                 onPressed: () {
                   SharedService.logout(context);
+                  Navigator.pushNamed(context, '/userLogin');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: newDarkRed,
@@ -286,7 +289,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
     await APIService.userImageUpdate(photo!);
 
-    // print("Image:${imageFile!.path}");
     Navigator.pop(context);
   }
 

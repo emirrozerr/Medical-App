@@ -151,7 +151,6 @@ class _MessageDetailsState extends State<MessageDetails> {
                   )
                 ],
               ),
-              //const Line(),
             ],
           ),
         ),
@@ -162,23 +161,27 @@ class _MessageDetailsState extends State<MessageDetails> {
   Widget allMessage(screen, keyboard) {
     return FutureBuilder(
         future: APIService.getDuoMessage(widget.duo),
-        builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) =>
-            snapshot.hasData
-                ? SizedBox(
-                    height: screen - keyboard,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (BuildContext context, index) => Padding(
+        builder: (BuildContext ctx, AsyncSnapshot<List> snapshot) {
+          return snapshot.hasData
+              ? SizedBox(
+                  height: screen - keyboard,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return Padding(
                           padding:
                               const EdgeInsets.only(left: 5, top: 5, bottom: 5),
-                          child: widget.id == snapshot.data![index]['source']
+                          child: widget.id.toString() ==
+                                  snapshot.data![index]['source']
                               ? source(snapshot.data![index]['message'])
-                              : target(snapshot.data![index]['message'])),
-                    ),
-                  )
-                : const Text("data"));
+                              : target(snapshot.data![index]['message']));
+                    },
+                  ),
+                )
+              : const Text("data");
+        });
   }
 
   Widget source(String text) {
@@ -189,7 +192,7 @@ class _MessageDetailsState extends State<MessageDetails> {
           right: 5,
           bottom: 5),
       padding: const EdgeInsets.all(19),
-      width: 250,
+      width: MediaQuery.of(context).size.width * 0.95,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(15.0),
@@ -209,15 +212,15 @@ class _MessageDetailsState extends State<MessageDetails> {
           ),
         ],
       ),
-      child: Text(
-        textAlign: TextAlign.right,
-        text,
-        style: const TextStyle(
-          fontSize: 14.0,
-          color: Colors.white,
-          letterSpacing: 0.7000000000000001,
-          fontWeight: FontWeight.w600,
-          height: 1.43,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.7,
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 14.0,
+            color: Color(0xFFECF1FF),
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

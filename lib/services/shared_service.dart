@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:api_cache_manager/api_cache_manager.dart';
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:flutter/material.dart';
 import 'package:tele_tip/main.dart';
 import 'package:tele_tip/models/user_login_res.dart';
+import 'package:tele_tip/ui/loginPage/login.dart';
 
 class SharedService {
   static Future<bool> isLoggedIn() async {
@@ -35,7 +38,7 @@ class SharedService {
     await APICacheManager().deleteCache('login_details');
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const MyApp()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
         (route) => false);
   }
 }

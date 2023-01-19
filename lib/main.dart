@@ -3,7 +3,6 @@ import 'package:tele_tip/services/shared_service.dart';
 import 'package:tele_tip/ui/homePage/home_tabs.dart';
 import 'package:tele_tip/ui/loginPage/login.dart';
 import 'package:tele_tip/ui/messagePage/chat_list.dart';
-import 'package:tele_tip/ui/registerPage/doctor_register.dart';
 import 'package:tele_tip/ui/registerPage/register_page.dart';
 
 Widget _default = const LoginPage();
@@ -31,7 +30,6 @@ class MyApp extends StatelessWidget {
         '/userLogin': (context) => const LoginPage(),
         '/userRegister': (context) => const RegisterPage(),
         '/details': (context) => const MessagePage(),
-        '/doctorRegister': (context) => const DoctorRegisterPage()
       },
     );
   }

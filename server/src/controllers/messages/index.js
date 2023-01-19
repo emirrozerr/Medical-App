@@ -46,6 +46,7 @@ const getUserAllMessage = async (req, res, next) => {
     });
 
     let str = makeQueryString(a);
+
     db.query(str, (err, result2) => {
       if (err) {
         throw err;
@@ -55,6 +56,8 @@ const getUserAllMessage = async (req, res, next) => {
           body: [],
         });
       }
+      console.log(result2);
+      console.log(result);
       result.map((item, index) => {
         item.source = id;
         item.target = a[index];
@@ -63,10 +66,9 @@ const getUserAllMessage = async (req, res, next) => {
         item.image = result2[index].image;
         item.last_login = result2[index].last_login;
         item.science = result2[index].science;
-
+    
         return item;
       });
-
       return res.status(200).send({
         success: true,
         msg: "err",
@@ -87,7 +89,7 @@ const sendMessage = async (req, res, next) => {
     )},${Number(source)},'${message}','${str}')`,
     (err, result) => {
       if (err) {
-        console.log(target, source, message);
+      
         throw err;
         return res.status(400).send({
           success: false,
@@ -105,7 +107,7 @@ const sendMessage = async (req, res, next) => {
 const messageDetails = async (req, res, next) => {
   const { duo } = req.headers;
   const a = `select * from message WHERE duo = "${duo}"`;
-  console.log(a);
+
   db.query(a, (err, result) => {
     if (err) {
       throw err;
@@ -114,7 +116,7 @@ const messageDetails = async (req, res, next) => {
         msg: err,
       });
     }
-    console.log(result);
+
     return res.status(200).send(result);
   });
 };

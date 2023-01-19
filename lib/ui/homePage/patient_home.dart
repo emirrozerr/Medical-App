@@ -494,7 +494,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     ],
                   )
                 : const Center(
-                    child: Text("Hiç mesajınız bulunmuyor"),
+                    child: Text("Doktor Bulunamadı."),
                   ));
   }
 
@@ -683,7 +683,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     ],
                   )
                 : const Center(
-                    child: Text("Hiç mesajınız bulunmuyor"),
+                    child: Text("Doktor Bulunamadı."),
                   ));
   }
 
@@ -872,7 +872,7 @@ class _PatientHomePageState extends State<PatientHomePage> {
                     ],
                   )
                 : const Center(
-                    child: Text("Hiç mesajınız bulunmuyor"),
+                    child: Text("Doktor Bulunamadı."),
                   ));
   }
 

@@ -1,6 +1,6 @@
 class Config {
   static const String appName = "Tele TIP";
-  static const String apiURL = "192.168.229.108:3000";
+  static const String apiURL = "192.168.0.13:3000";
   static const String userLoginURL = "/api/users/login";
   static const String userRegisterURL = "/api/users/register";
   static const String doctorRegisterURL = "/api/users/registerDoctor";

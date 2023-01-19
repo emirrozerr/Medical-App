@@ -39,7 +39,6 @@ class User {
     required this.email,
     required this.password,
     required this.surname,
-    required this.phone,
     required this.lastLogin,
     this.isDoctor,
     this.major,
@@ -53,7 +52,6 @@ class User {
   late final String email;
   late final String password;
   late final String surname;
-  late final String phone;
   late final String? lastLogin;
   late final int? isDoctor;
   late final int? major;
@@ -68,7 +66,6 @@ class User {
     email = json['email'];
     password = json['password'];
     surname = json['surname'];
-    phone = json['phone'];
     lastLogin = json['last_login'];
     isDoctor = json['is_doctor'];
     major = json['major'];
@@ -85,7 +82,6 @@ class User {
     _data['email'] = email;
     _data['password'] = password;
     _data['surname'] = surname;
-    _data['phone'] = phone;
     _data['last_login'] = lastLogin;
     _data['is_doctor'] = isDoctor;
     _data['major'] = major;
